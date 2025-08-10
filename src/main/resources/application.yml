@@ -1,0 +1,39 @@
+server:
+  port: 8080
+  error:
+    include-message: always
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/wallpaper_db  # Change if your DB name/port is different
+    username: postgres  # Your PostgreSQL username (default is 'postgres')
+    password: 123456  # Replace with your actual PostgreSQL password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update  # Creates/updates tables automatically based on entities
+    show-sql: true  # Optional: Logs SQL queries for debugging
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect  # Tells Hibernate to use PostgreSQL syntax
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: your-google-client-id  # From Google Developer Console
+            client-secret: your-google-client-secret
+            scope: profile,email
+  servlet:
+    multipart:
+      max-file-size: 10MB  # Max size for uploaded images
+      max-request-size: 10MB
+
+# JWT Configuration - moved to root level
+jwt:
+  secret: developmentSecretKeyThatIsAtLeast32CharactersLong  # Generate with: openssl rand -hex 32
+  expiration: 86400000  # 1 day in ms
+
+# App Configuration - moved to root level
+app:
+  upload-dir: uploads  # Local directory for image storage
